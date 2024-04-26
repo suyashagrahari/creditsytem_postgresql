@@ -4,30 +4,32 @@ services:
   server:
     build: .
     ports:
-      - 3000 : 3000
-    container_name: server_container
+      - '3000:3000'  
+    container_name: 'server_container'
     networks:
       - nodejs-postgres-networks
     volumes:
-      - . : /app
+      - .:/app  
     depends_on:
       - database
     
   database:
     image: postgres:latest
     ports:
-      - 5432:5432
-    container_name: postgres_container
+      - '5432:5432'  
+    container_name: 'postgres_container'
     networks:
       - nodejs-postgres-networks
     environment:
-      - POSTGRES_PASSWORD=postgresql$1234$
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=creditsystem
+      POSTGRES_PASSWORD: 'postgresql$1234$'  
+      POSTGRES_USER: 'postgres'  
+      POSTGRES_DB: 'creditsystem' 
     volumes:
       - data:/var/lib/postgresql/data
 
 networks:
-  nodejs-postgres-networks
+  nodejs-postgres-networks:
+    driver: bridge  
+
 volumes:
-  data
+  data:
